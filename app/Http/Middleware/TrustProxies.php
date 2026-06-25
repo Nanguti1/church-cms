@@ -33,17 +33,4 @@ class TrustProxies extends Middleware
         | Request::HEADER_X_FORWARDED_PORT
         | Request::HEADER_X_FORWARDED_PROTO;
 
-    /**
-     * Create a new trusted proxies middleware instance.
-     */
-    public function __construct()
-    {
-        $proxies = env('TRUSTED_PROXIES');
-
-        if ($proxies !== null && $proxies !== '') {
-            $this->proxies = $proxies === '*'
-                ? '*'
-                : array_map('trim', explode(',', $proxies));
-        }
-    }
 }
