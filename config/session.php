@@ -18,7 +18,10 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    'driver' => env(
+        'SESSION_DRIVER',
+        env('APP_ENV') === 'production' ? 'database' : 'file'
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +49,7 @@ return [
     |
     */
 
-    'encrypt' => false,
+    'encrypt' => env('SESSION_ENCRYPT', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -72,7 +75,7 @@ return [
     |
     */
 
-    'connection' => null,
+    'connection' => env('SESSION_CONNECTION'),
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +88,7 @@ return [
     |
     */
 
-    'table' => 'sessions',
+    'table' => env('SESSION_TABLE', 'sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -190,10 +193,10 @@ return [
     | take place, and can be used to mitigate CSRF attacks. By default, we
     | do not enable this as other CSRF protection services are in place.
     |
-    | Supported: "lax", "strict"
+    | Supported: "lax", "strict", "none"
     |
     */
 
-    'same_site' => null,
+    'same_site' => env('SESSION_SAME_SITE', 'lax'),
 
 ];
