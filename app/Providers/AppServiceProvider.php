@@ -40,6 +40,8 @@ use Schema;
 use Config;
 use App\Models\ChurchDetail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\URL;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -49,6 +51,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if ($appUrl = config('app.url')) {
+            URL::forceRootUrl($appUrl);
+
+            if (str_starts_with($appUrl, 'https://')) {
+                URL::forceScheme('https');
+            }
+        }
+
         Userprofile::observe(UserprofileObserver::class);
         MediaFile::observe(MediaFileObserver::class);
         Bulletin::observe(BulletinObserver::class);

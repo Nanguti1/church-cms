@@ -156,7 +156,9 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
+    // Treat SESSION_DOMAIN= (empty string in .env) as null — an empty domain
+    // breaks Set-Cookie on LiteSpeed/cPanel and causes 419 on every POST.
+    'domain' => ($domain = env('SESSION_DOMAIN')) === '' || $domain === null ? null : $domain,
 
     /*
     |--------------------------------------------------------------------------
